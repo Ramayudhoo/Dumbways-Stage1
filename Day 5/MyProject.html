@@ -60,7 +60,7 @@
       class="container mt-5 pt-5 d-flex justify-content-center"
       style="background-color: rgba(212, 212, 212, 0.507); height: 80vh"
     >
-      <form class="w-50">
+      <form class="w-50" id="projectForm">
         <h1 class="mb-4">Add a Project</h1>
 
         <!-- Project Name -->
@@ -143,6 +143,37 @@
         <button type="submit" class="btn btn-dark">Submit</button>
       </form>
     </div>
+    <div class="container mt-5">
+      <h2 class="mb-3">My Projects</h2>
+      <div id="projectCards" class="row g-4"></div>
+    </div>
+    <!-- Modal Detail Project -->
+    <div class="modal fade" id="detailModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalTitle"></h5>
+            <button
+              title="detailModal"
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBody"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="index.js"></script>
   </body>
 </html>
