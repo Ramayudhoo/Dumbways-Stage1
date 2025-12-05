@@ -6,14 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderProjects();
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const projectName = document.getElementById("Projectname").value.trim();
     const description = document.getElementById("Description").value.trim();
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
-    const imageInput = document.getElementById("formFile");
+    const img = document.getElementById("formFile").files[0];
 
     const technologies = [];
     if (document.getElementById("tech1").checked) technologies.push("Node.js");
@@ -22,9 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("tech4").checked)
       technologies.push("TypeScript");
 
-    let imageURL = "";
-    if (imageInput.files[0]) {
-      imageURL = URL.createObjectURL(imageInput.files[0]);
+    // Convert image to Base64 (agar bisa disimpan ke localStorage)
+    let imageBase64 = "";
+    if (img) {
+      imageBase64 = await toBase64(img);
     }
 
     const projectData = {
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       startDate,
       endDate,
       technologies,
-      imageURL,
+      imageURL: imageBase64,
     };
 
     projects.push(projectData);
@@ -41,6 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
     renderProjects();
     form.reset();
   });
+  // Convert file → base64
+  function toBase64(file) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
+  }
 
   function saveToLocal() {
     localStorage.setItem("projects", JSON.stringify(projects));
